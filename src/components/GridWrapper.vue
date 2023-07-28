@@ -52,7 +52,7 @@ export default {
         id = questionId;
       }
       console.log(questionId)
-      axios.get('http://127.0.0.1:8000/question/' + id + '/')
+      axios.get('http://0.0.0.0:8000/question/' + id + '/')
           .then(res => {
             this.selectedQuestion = res.data.text;
             this.$emit('question-selected', res.data.text, clickedCellId);
@@ -62,7 +62,7 @@ export default {
           });
     },
     inProgress(cellId){
-      axios.put('http://127.0.0.1:8000/cell/' + cellId + '/in_progress/', {
+      axios.put('http://0.0.0.0:8000/cell/' + cellId + '/in_progress/', {
         withCredentials: true,
       })
           .then(res => {
