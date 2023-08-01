@@ -1,14 +1,30 @@
 <template>
   <div className="game-timer">
-  <h1> {{ timeElapsed }}</h1>
-    <br>
+    <div v-if="isEndGameResponse">
+      <h1> {{ staticTime }}</h1>
+    </div>
+    <!-- Показывать динамическое значение времени, если isEndGameResponse равен false -->
+    <div v-else>
+      <h1> {{ timeElapsed }}</h1>
+      <br>
+    </div>
+
 
   </div>
 </template>
 
 <script>
 export default {
+
   props: {
+    isEndGameResponse: {
+      type: Boolean,
+      default: false,
+    },
+    staticTime: {
+      type: String,
+      required: false,
+    },
     created_at:{
       type: String,
       required: true,
