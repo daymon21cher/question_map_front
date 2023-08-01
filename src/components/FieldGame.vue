@@ -102,7 +102,7 @@ export default {
         field_key: this.field_key
       };
       console.log(data);
-      axios.post('https://tabquest.ru/api/field/login/', data, {
+      axios.post('http://tabquest.ru/api/field/login/', data, {
         withCredentials: true,
       })
           .then(res => {
@@ -115,7 +115,7 @@ export default {
           });
     },
     loadCells() {
-      axios.get('https://tabquest.ru/api/field/custom_action/', {
+      axios.get('http://tabquest.ru/api/field/custom_action/', {
         withCredentials: true,
       })
           .then(res => {
@@ -160,7 +160,7 @@ export default {
       const data = {
         text: this.textAnswer,
       };
-      axios.post('https://tabquest.ru/api/cell/' + this.clickedCellId + '/take_answer/', data, {
+      axios.post('http://tabquest.ru/api/cell/' + this.clickedCellId + '/take_answer/', data, {
         withCredentials: true,
       })
           .then(res => {
