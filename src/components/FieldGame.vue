@@ -1,11 +1,13 @@
 <template>
 
+  <ModalWindowGame v-if="closed_at" :time="diffTime"/>
+
   <div class='d-flex justify-content-center'>
-    <GameTimer v-if="created_at" :created_at="created_at" />
+    <GameTimer v-if="created_at"
+               :created_at="created_at"
+               :isEndGameResponse="isEndGameResponse"
+               :staticTime="diffTime"/>
   </div>
-
-
-
 
 
   <div v-if="!isLoggedIn">
@@ -29,7 +31,7 @@
       </div>
     </div>
   </div>
-  <div v-else >
+  <div v-else>
 
     <div class="container">
       <div class="row">
@@ -42,12 +44,12 @@
           />
         </div>
         <div class="col-sm">
-          <form class="form-inline" @submit.prevent="handleAnswerSubmit">
+          <form class="form-inline" id="answerForm" @submit.prevent="handleAnswerSubmit">
             <div class="text-wrap">
               {{ selectedQuestion }}
             </div>
             <div class="form-group">
-              <input type="text" class="form-control mr-2" v-model="textAnswer">
+              <input type="text" id="answerForm1" class="form-control mr-2" v-model="textAnswer">
               <br>
               <button type="submit" class="btn btn-primary">Отправить</button>
             </div>
@@ -60,27 +62,31 @@
 </template>
 
 
-
 <script>
 import axios from 'axios'
 import GridWrapper from './GridWrapper.vue';
 import GameTimer from './GameTimer.vue';
+import ModalWindowGame from './ModalWindowGame.vue';
 //axios.defaults.withCredentials = true;
 export default {
   components: {
     GridWrapper,
     GameTimer,
+    ModalWindowGame,
 
   },
   data() {
     return {
+
       created_at: '',
       closed_at: '',
+      diffTime: '',
       isLoggedIn: false,
+      isEndGameResponse: false,
       cells: [],
       field_key: '',
       formValue: '',
-      textAnswer:'',
+      textAnswer: '',
       selectedQuestion: 'Выберите вопрос',
       isSubmitButtonClicked: false,
       reloadGrid: false, // Добавляем состояние reloadGrid
@@ -90,6 +96,7 @@ export default {
   },
 
   methods: {
+
     handleLogin() {
       const data = {
         field_key: this.field_key
@@ -127,6 +134,12 @@ export default {
             this.created_at = res.data.created_at;
             this.closed_at = res.data.closed_at;
             this.isLoggedIn = true;
+
+            this.diffTime = this. getTimeDifference(this.created_at, this.closed_at);
+            console.log(this. getTimeDifference(this.closed_at, this.created_at));
+            if(this.closed_at){
+              this.isEndGameResponse = true;
+            }
             return res.data;
           })
           .catch(err => {
@@ -151,10 +164,13 @@ export default {
         withCredentials: true,
       })
           .then(res => {
+            this.selectedQuestion = "";
+            this.textAnswer = "";
             console.log(res);
             this.loadCells();
-            if(res.status === 201){
-              console.log('Пупа получил за Лупу за ' + this.closed_at  + this.created_at)
+            if (res.status === 201) {
+
+              //alert('Пупа получил за Лупу за ' + this.closed_at  + this.created_at)
             }
 
           })
@@ -164,6 +180,24 @@ export default {
           });
 
     },
+    getTimeDifference(startTime, endTime) {
+      // Шаг 1: Преобразовать строки в объекты Date
+      const startDateObj = new Date(startTime);
+      const endDateObj = new Date(endTime);
+
+      // Шаг 2: Вычислить разницу в миллисекундах
+      const timeDifferenceInMs = endDateObj - startDateObj;
+
+      // Шаг 3: Преобразовать разницу в формат "чч:мм:сс"
+      const hours = String(Math.floor(timeDifferenceInMs / (1000 * 60 * 60))).padStart(2, '0');
+      const minutes = String(Math.floor((timeDifferenceInMs % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+      const seconds = String(Math.floor((timeDifferenceInMs % (1000 * 60)) / 1000)).padStart(2, '0');
+
+      // Сформировать строку с разницей времени
+      const timeDifference = `${hours}:${minutes}:${seconds}`;
+
+      return timeDifference;
+    }
   },
   computed: {
     isSubmitButtonClickedComputed() {
