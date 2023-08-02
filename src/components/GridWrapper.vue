@@ -7,8 +7,7 @@
         :class="[cell.status, { active: cell.field_number === activeCellNumber, disabled: isSubmitButtonClicked && cell.field_number !== activeCellNumber }]"
         @click="handleCellClick(cell)"
 
-    >
-      {{ cell.field_number }}
+    >▢
     </div>
   </div>
 </template>
@@ -40,6 +39,7 @@ export default {
         console.log(this.activeCellNumber);
         this.handleSubmit(clickedCell.question, clickedCell.id);
         this.inProgress(clickedCell.id);
+        console.log('click');
 
       }
     },
@@ -105,6 +105,8 @@ export default {
 .OPEN {
   pointer-events: none; /* Отключает обработчики событий на неактивных ячейках */
   background-color: #fcff52;
+  /*background-image: url("../assets/puzzle.png");*/
+  background-size: cover;
 }
 
 .CLOSE {

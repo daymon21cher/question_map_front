@@ -12,7 +12,7 @@
 
   <div v-if="!isLoggedIn">
     <div class="row">
-      <div class="col-sm">
+      <div class="col">
         <main class="form-signin">
           <form @submit.prevent="handleLogin">
             <h1 class="h3 mb-3 fw-normal">Пожалуйста, войдите</h1>
@@ -23,8 +23,7 @@
             </div>
 
             <br>
-            <button class="w-100 btn btn-lg btn-primary" type="submit">Войти</button>
-            <p class="mt-5 mb-3 text-muted">&copy; Табус-квест 2017–2021</p>
+            <button class="w-100 btn btn-lg btn-primary btn-purple" type="submit">Войти</button>
           </form>
         </main>
 
@@ -32,10 +31,17 @@
     </div>
   </div>
   <div v-else>
+    <div class="row">
+      <div class="float-left col">
+        <H3>Пазлов собрано: {{countPuzzle}}</H3>
+      </div>
+      <div class="float-right col">
 
+      </div>
+    </div>
     <div class="container">
       <div class="row">
-        <div class="col-sm">
+        <div class="col">
           <GridWrapper
               :key="reloadGrid"
               :cells="cells"
@@ -43,7 +49,7 @@
               :is-submit-button-clicked="isSubmitButtonClicked"
           />
         </div>
-        <div class="col-sm">
+        <div class="col">
           <form class="form-inline" id="answerForm" @submit.prevent="handleAnswerSubmit">
             <div class="text-wrap">
               {{ selectedQuestion }}
@@ -51,9 +57,18 @@
             <div class="form-group">
               <input type="text" id="answerForm1" class="form-control mr-2" v-model="textAnswer">
               <br>
-              <button type="submit" class="btn btn-primary">Отправить</button>
+              <button type="submit" class="btn btn-primary btn-purple">Отправить</button>
             </div>
           </form>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div v-if="showImage">
+              <img src="../assets/test.png" alt="My Image" STYLE="width: 70%; height: 70%;">
+            </div>
+            <br>
+            <yandex-map-widget :coordinates="coordinates" :zoom="15"/>
+          </div>
         </div>
       </div>
     </div>
@@ -67,12 +82,14 @@ import axios from 'axios'
 import GridWrapper from './GridWrapper.vue';
 import GameTimer from './GameTimer.vue';
 import ModalWindowGame from './ModalWindowGame.vue';
+import YandexMapWidget from "@/components/YandexMapWidget";
 //axios.defaults.withCredentials = true;
 export default {
   components: {
     GridWrapper,
     GameTimer,
     ModalWindowGame,
+    YandexMapWidget
 
   },
   data() {
@@ -91,6 +108,9 @@ export default {
       isSubmitButtonClicked: false,
       reloadGrid: false, // Добавляем состояние reloadGrid
       clickedCellId: null,
+      coordinates: '',
+      showImage: false,
+      countPuzzle: 0,
 
     };
   },
@@ -124,20 +144,24 @@ export default {
             for (let i = 0; i < this.cells.length; i++) {
               if (this.cells[i].status === "IN_PROGRESS") {
                 this.clickedCellId = this.cells[i].id;
-                console.log(this.clickedCellId)
                 this.selectedQuestion = this.cells[i].question.text;
-                console.log(this.selectedQuestion)
+                this.coordinates = this.cells[i].question.location;
+                this.showImage = false;
+                if (this.cells[i].question.name === "f_five") {
+                  this.showImage = true;
+                }
                 break; // Если элемент найден, прерываем цикл
               }
             }
+            this.countPuzzle = this.countOpenCellsWithId8(res.data);
             this.reloadGrid = !this.reloadGrid;
             this.created_at = res.data.created_at;
             this.closed_at = res.data.closed_at;
             this.isLoggedIn = true;
 
-            this.diffTime = this. getTimeDifference(this.created_at, this.closed_at);
-            console.log(this. getTimeDifference(this.closed_at, this.created_at));
-            if(this.closed_at){
+            this.diffTime = this.getTimeDifference(this.created_at, this.closed_at);
+            console.log(this.getTimeDifference(this.closed_at, this.created_at));
+            if (this.closed_at) {
               this.isEndGameResponse = true;
             }
             return res.data;
@@ -179,6 +203,15 @@ export default {
             console.log(data);
           });
 
+    },
+    countOpenCellsWithId8(data) {
+      let count = 0;
+      data.cell_set.forEach((cell) => {
+        if (cell.status === "OPEN" && cell.cell_type.id === 8) {
+          count++;
+        }
+      });
+      return count;
     },
     getTimeDifference(startTime, endTime) {
       // Шаг 1: Преобразовать строки в объекты Date
@@ -301,5 +334,10 @@ body {
 .item.error {
   background-color: #ff000055;
   transform: rotateX(180deg);
+}
+
+.btn-purple {
+  background-color: #9c3cf0;
+  border-color: #9c3cf0;
 }
 </style>
