@@ -7,7 +7,8 @@
         :class="[cell.status, { active: cell.field_number === activeCellNumber, disabled: isSubmitButtonClicked && cell.field_number !== activeCellNumber }]"
         @click="handleCellClick(cell)"
 
-    >▢
+    >
+      <i :class="getRandomIcon()"></i>
     </div>
   </div>
 </template>
@@ -28,11 +29,34 @@ export default {
   },
   data() {
     return {
+      availableIcons: [
+        'fas fa-heart',
+        'fas fa-star',
+        'fas fa-sun',
+        'fas fa-moon',
+        'fas fa-leaf',
+        'fas fa-cloud',
+        'fas fa-tree',
+        'fas fa-mountain',
+        'fas fa-anchor',
+        'fa-solid fa-seedling',
+        'fas fa-globe',
+        'fas fa-crown',
+        'fas fa-bolt',
+        'fas fa-feather',
+        'fas fa-umbrella',
+        'fas fa-ship',
+        // Добавьте другие иконки, если необходимо
+      ],
       activeCellNumber: null,
       selectedQuestion: '',
     };
   },
   methods: {
+    getRandomIcon() {
+      const randomIndex = Math.floor(Math.random() * this.availableIcons.length);
+      return this.availableIcons[randomIndex];
+    },
     handleCellClick(clickedCell) {
       if (!this.isSubmitButtonClicked) {
         this.activeCellNumber = clickedCell.field_number;
@@ -115,10 +139,26 @@ export default {
 
 .IN_PROGRESS {
   /*pointer-events: none; /* Отключает обработчики событий на неактивных ячейках */
-  background-color: blue;
+  background-color: #198756;
   transform: scale(0.98);
   opacity: 0.7;
 }
+.cell.CLOSE i {
+  color: #fcff52; /* Желтый цвет */
+}
+
+.cell.IN_PROGRESS i {
+  color: black; /* Желтый цвет */
+}
+
+.cell.OPEN i {
+  color: #9c3cf0; /* Желтый цвет */
+}
+
+.cell.DISABLED i {
+  color: #f5f5f5; /* Желтый цвет */
+}
+
 
 /* Стили для кнопки отправки формы */
 .submit-button {
