@@ -121,6 +121,7 @@ export default {
       const data = {
         field_key: this.field_key
       };
+
       console.log(data);
       axios.post('https://puzzlequest.space/api/field/login/', data, {
         withCredentials: true,
@@ -337,7 +338,7 @@ body {
 }
 
 .btn-purple {
-  background-color: #9c3cf0;
-  border-color: #9c3cf0;
+  background-color: #090735;
+  border-color: #090735;
 }
 </style>

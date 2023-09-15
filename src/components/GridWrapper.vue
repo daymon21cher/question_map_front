@@ -128,13 +128,13 @@ export default {
 /* Стили для разных статусов ячеек */
 .OPEN {
   pointer-events: none; /* Отключает обработчики событий на неактивных ячейках */
-  background-color: #fcff52;
+  background-color: #208D1C;
   /*background-image: url("../assets/puzzle.png");*/
   background-size: cover;
 }
 
 .CLOSE {
-  background-color: #9c3cf0;
+  background-color: #090735;
 }
 
 .IN_PROGRESS {
@@ -144,7 +144,7 @@ export default {
   opacity: 0.7;
 }
 .cell.CLOSE i {
-  color: #fcff52; /* Желтый цвет */
+  color: #208D1C; /* Желтый цвет */
 }
 
 .cell.IN_PROGRESS i {
@@ -152,7 +152,7 @@ export default {
 }
 
 .cell.OPEN i {
-  color: #9c3cf0; /* Желтый цвет */
+  color: #090735; /* Желтый цвет */
 }
 
 .cell.DISABLED i {
