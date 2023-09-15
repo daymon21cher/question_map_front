@@ -76,7 +76,7 @@ export default {
         id = questionId;
       }
       console.log(questionId)
-      axios.get('https://tabquest.ru/api/question/' + id + '/')
+      axios.get('https://puzzlequest.space/api/question/' + id + '/')
           .then(res => {
             this.selectedQuestion = res.data.text;
             this.$emit('question-selected', res.data.text, clickedCellId);
@@ -86,7 +86,7 @@ export default {
           });
     },
     inProgress(cellId){
-      axios.put('https://tabquest.ru/api/cell/' + cellId + '/in_progress/', {
+      axios.put('https://puzzlequest.space/api/cell/' + cellId + '/in_progress/', {
         withCredentials: true,
       })
           .then(res => {

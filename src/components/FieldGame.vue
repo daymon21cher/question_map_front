@@ -136,7 +136,7 @@ export default {
           });
     },
     loadCells() {
-      axios.get('https://tabquest.ru/api/field/custom_action/', {
+      axios.get('https://puzzlequest.space/api/field/custom_action/', {
         withCredentials: true,
       })
           .then(res => {
@@ -185,7 +185,7 @@ export default {
       const data = {
         text: this.textAnswer,
       };
-      axios.post('https://tabquest.ru/api/cell/' + this.clickedCellId + '/take_answer/', data, {
+      axios.post('https://puzzlequest.space/api/cell/' + this.clickedCellId + '/take_answer/', data, {
         withCredentials: true,
       })
           .then(res => {
