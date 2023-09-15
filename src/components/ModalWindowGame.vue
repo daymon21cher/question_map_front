@@ -62,7 +62,7 @@ export default {
 }
 
 .modal-dialog {
-  background-color: #fcff52;
+  background-color: #208D1C;
   box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
   border-radius: 5px;
   padding: 20px;
@@ -73,14 +73,14 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #9c3cf0;
+  border-bottom: 1px solid #090735;
   padding-bottom: 10px;
 }
 
 .modal-title {
   margin: 0;
   font-size: 18px;
-  color: #9c3cf0;
+  color: #090735;
 }
 
 .btn-close {
@@ -88,7 +88,7 @@ export default {
   background: transparent;
   cursor: pointer;
   font-size: 20px;
-  color: #9c3cf0;
+  color: #090735;
   padding: 0;
   margin: 0;
 }
