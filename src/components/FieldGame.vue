@@ -122,7 +122,7 @@ export default {
         field_key: this.field_key
       };
       console.log(data);
-      axios.post('https://tabquest.ru/api/field/login/', data, {
+      axios.post('https://puzzlequest.space/api/field/login/', data, {
         withCredentials: true,
       })
           .then(res => {
