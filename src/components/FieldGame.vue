@@ -64,7 +64,7 @@
         <div class="row">
           <div class="col">
             <div v-if="showImage">
-              <img src="../assets/test.png" alt="My Image" STYLE="width: 70%; height: 70%;">
+              <img src="../assets/test1.png" alt="My Image" STYLE="width: 70%; height: 70%;">
             </div>
             <br>
             <yandex-map-widget :coordinates="coordinates" :zoom="15"/>

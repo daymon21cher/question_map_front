@@ -23,15 +23,15 @@ export default {
   },
   watch: {
     coordinates(newValue) {
-      this.updateMap(newValue || "54.214959, 32.065077", this.zoom);
+      this.updateMap(newValue || "54.782635, 32.045287", this.zoom);
     },
     zoom(newValue) {
-      this.updateMap(this.coordinates || "54.214959, 32.065077", newValue);
+      this.updateMap(this.coordinates || "54.782635, 32.045287", newValue);
     },
   },
   mounted() {
     ymaps.ready(() => {
-      this.initMap(this.coordinates || "54.214959, 32.065077");
+      this.initMap(this.coordinates || "54.782635, 32.045287");
     });
   },
   methods: {
